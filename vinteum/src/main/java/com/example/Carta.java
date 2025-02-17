@@ -11,13 +11,17 @@ public class Carta {
 
     public String imagePath() {
         String numeroCarta = numero + "";
+
         if (numero == 1) numeroCarta = "Ace";
         if (numero == 11) numeroCarta = "Jack";
         if (numero == 12) numeroCarta = "Queen";
         if (numero == 13) numeroCarta = "King";
+
         return "classic-cards/" + numeroCarta + naipe + ".png";
     }
 
+    // para ler e ver qual o número e o naipe
+    // pode ler, mas não pode escrever (set)
     public int getNumero() {
         return numero;
     }

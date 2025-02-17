@@ -1,20 +1,22 @@
 package com.example;
 
 public class Jogo {
+    // # - protected -> só quem estiver dentro do pacote pode acessar os atributos
+    // PrimaryController -> vai acessar coisas do jogo
 
-    //Foi usando o protected pois nesse cenário o jogador e o computador vai ser acessado pelo controler
-    //O controler é como um controlador de voo, só as classe do mesmo pacote pode acessar com o protected
     protected Monte monte = new Monte();
-    protected Jogador jogador = new Jogador();
+    protected  Jogador jogador = new Jogador();
     protected Computador computador = new Computador();
 
-    public Jogo() {
+    public Jogo(){
         monte.embaralhar();
     }
 
-    //ParametroPolimorfico Jogador classe pai de computador, nesse caso jogador pode ser os dois
-    public Carta distribuiCartaParaJogador(Jogador jogador){
-        if (jogador.parou()){
+    // Jogador é a classe pai de computador
+    // parametro polimorfico (esse método recebe qualquer coisa que for jogador, ou seja um computador também)
+
+    public Carta distribuirCartaParaJogador(Jogador jogador){
+        if(jogador.parou()){
             return null;
         }
 
@@ -27,22 +29,25 @@ public class Jogo {
         if (jogadorEstourou() && computadorEstourou() || jogador.getPontos() == computador.getPontos()){
             return "Empatou";
         }
-        if (computadorEstourou() || jogador.getPontos() > computador.getPontos()){
-            return "Voce Ganhou";
-        }
-        return "Você Perdeu";
-    }
 
+        if(computadorEstourou() || !jogadorEstourou() && jogador.getPontos() > computador.getPontos()){
+            return "Você ganhou";
+        }
+
+        return "Você perdeu";
+    }
     public boolean acabou(){
+        // alguém estourou ou os dos dois pararam
+        // esse método retorna true ou false
         return jogadorEstourou() || computadorEstourou() || osDoisPararam();
     }
 
-    private boolean  jogadorEstourou(){
+    //métodos auxiliares
+    private boolean jogadorEstourou(){
         return jogador.getPontos() > 21;
     }
-
-    private boolean  computadorEstourou(){
-        return jogador.getPontos() > 21;
+    private boolean computadorEstourou(){
+        return computador.getPontos() > 21;
     }
 
     private boolean osDoisPararam(){
